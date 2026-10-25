@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vehicle Audit Form</title>
+<style>
+:root{--navy:#17365d;--pale:#dceaf7;--border:#63778a}
+*{box-sizing:border-box}body{margin:0;padding:18px;background:#eef2f6;color:#18232e;font-family:Arial,Helvetica,sans-serif}
+.actions,.notice{max-width:1050px;margin:0 auto 12px}.actions{display:flex;gap:10px;flex-wrap:wrap}
+button{border:0;border-radius:5px;padding:12px 16px;background:var(--navy);color:white;font-weight:700;cursor:pointer}
+button:disabled{opacity:.6}.notice{background:#fff8d9;border:1px solid #e4d28a;padding:10px 12px;font-size:13px}
+.sheet{max-width:1050px;margin:auto;background:white;padding:25px;box-shadow:0 2px 12px #0001}
+h1{text-align:center;color:var(--navy);margin:0 0 18px}h2{font-size:16px;color:white;background:var(--navy);padding:9px 11px;margin:20px 0 8px}
+details.audit-section{margin:20px 0 12px;border:1px solid #c6d2de;border-radius:5px;overflow:hidden;background:#fff}
+details.audit-section>summary{cursor:pointer;list-style:none;position:relative}
+details.audit-section>summary::-webkit-details-marker{display:none}
+details.audit-section>summary::after{content:"＋";position:absolute;right:13px;top:8px;color:white;font-size:18px;font-weight:bold}
+details.audit-section[open]>summary::after{content:"−"}
+details.audit-section>summary h2{margin:0;border-radius:0;padding:11px 42px 11px 11px}
+details.audit-section>table{margin:0 0 12px}
+table{width:100%;border-collapse:collapse;margin-bottom:12px;font-size:12px}
+th,td{border:1px solid var(--border);padding:6px;vertical-align:middle}th{background:var(--pale);text-align:left}
+input[type=text],input[type=date],select,textarea{width:100%;min-width:0;border:1px solid #aab7c4;border-radius:3px;padding:7px;font:inherit;background:white}
+input[type=checkbox],input[type=radio]{accent-color:var(--navy)}
+.options{display:flex;gap:9px;flex-wrap:wrap}.options label{white-space:nowrap}
+@media(max-width:720px){body{padding:7px}.sheet{padding:10px;overflow-x:auto}table{font-size:10px}td,th{padding:4px}.actions button{flex:1}}
+@media print{@page{size:A4;margin:9mm}body{padding:0;background:white}.actions,.notice{display:none}.sheet{max-width:none;padding:0;box-shadow:none}details.audit-section:not([open])>table{display:table}details.audit-section>summary::after{display:none}details.audit-section{border:0;overflow:visible}h2{break-after:avoid}table{break-inside:avoid}input,select,textarea{border:0;padding:2px;background:transparent}}
+</style>
+</head>
+<body>
+<div class="actions">
+<button id="submitBtn" type="button" onclick="submitAndDownload()">Submit Details &amp; Download PDF</button>
+<button type="button" onclick="window.print()">Print / Save as PDF</button>
+<button type="button" onclick="clearForm()">Clear Form</button>
+</div>
+<div class="notice">Fill in the form, then choose “Submit Details &amp; Download PDF” to download a completed PDF. Automatic PDF generation needs an internet connection to load the PDF library. The Section C Status column has been removed; it has an Expiry Date field and a separate NA checkbox.</div>
+<form id="auditForm" class="sheet">
+<h1>VEHICLE AUDIT FORM</h1>
+<details class="audit-section">
+<summary><h2>SECTION A: BASIC DETAILS</h2></summary>
+<table><thead><tr><th>Designation</th><th>Name</th><th>I-Card Number</th><th>I-Card Expiry Date</th><th>Band (B/S/G/D)</th></tr></thead><tbody>
+<tr><td>Vehicle Number</td><td colspan="4"><input name="Vehicle Number" type="text" required></td></tr>
+<tr><td>Engineer</td><td><input name="Engineer Name" type="text"></td><td><input name="Engineer I-Card Number" type="text"></td><td><input name="Engineer I-Card Expiry Date" type="date"></td><td><select name="Engineer Band"><option value="">Select</option><option>B</option><option>S</option><option>G</option><option>D</option></select></td></tr>
+<tr><td>Safety Supervisor</td><td><input name="Safety Supervisor Name" type="text" value="Vivesh" readonly></td><td><input name="Safety Supervisor I-Card Number" type="text"></td><td><input name="Safety Supervisor I-Card Expiry Date" type="date"></td><td><select name="Safety Supervisor Band"><option value="">Select</option><option>B</option><option>S</option><option>G</option><option>D</option></select></td></tr>
+<tr><td>Site Supervisor</td><td><input name="Site Supervisor Name" type="text"></td><td><input name="Site Supervisor I-Card Number" type="text"></td><td><input name="Site Supervisor I-Card Expiry Date" type="date"></td><td><select name="Site Supervisor Band"><option value="">Select</option><option>B</option><option>S</option><option>G</option><option>D</option></select></td></tr>
+<tr><td>Lineman</td><td><input name="Lineman Name" type="text"></td><td><input name="Lineman I-Card Number" type="text"></td><td><input name="Lineman I-Card Expiry Date" type="date"></td><td><select name="Lineman Band"><option value="">Select</option><option>B</option><option>S</option><option>G</option><option>D</option></select></td></tr>
+<tr><td>Meter Installer</td><td><input name="Meter Installer Name" type="text"></td><td><input name="Meter Installer I-Card Number" type="text"></td><td><input name="Meter Installer I-Card Expiry Date" type="date"></td><td><select name="Meter Installer Band"><option value="">Select</option><option>B</option><option>S</option><option>G</option><option>D</option></select></td></tr>
+<tr><td>Driver</td><td><input name="Driver Name" type="text"></td><td><input name="Driver I-Card Number" type="text"></td><td><input name="Driver I-Card Expiry Date" type="date"></td><td><select name="Driver Band"><option value="">Select</option><option>B</option><option>S</option><option>G</option><option>D</option></select></td></tr>
+</tbody></table></details>
+<details class="audit-section">
+<summary><h2>SECTION B: VEHICLE DETAILS</h2></summary>
+<table><thead><tr><th>Particulars</th><th>Details / Validity Date</th><th>Particulars</th><th>Details / Validity Date</th></tr></thead><tbody>
+<tr><td>Vehicle Number</td><td><input name="Vehicle Details Vehicle Number" type="text"></td><td>Fuel Type</td><td><select name="Fuel Type"><option value="">Select</option><option>Diesel</option><option>Petrol</option><option>CNG</option><option>Electric</option><option>Hybrid</option><option>Other</option></select></td></tr>
+<tr><td>Insurance Valid Up To</td><td><input name="Insurance Valid Up To" type="date"></td><td>Owner Name</td><td><input name="Owner Name" type="text"></td></tr>
+<tr><td>PUCC Valid Up To</td><td><input name="PUCC Valid Up To" type="date"></td><td>Registration Date</td><td><input name="Registration Date" type="date"></td></tr>
+<tr><td>Fitness Valid Up To</td><td><input name="Fitness Valid Up To" type="date"></td><td></td><td></td></tr>
+</tbody></table></details>
+<details class="audit-section">
+<summary><h2>SECTION C: FIRST AID KIT</h2></summary>
+<table><thead><tr><th>S.No.</th><th>Item Name</th><th>Required Qty.</th><th>Available Qty.</th><th>Expiry Date</th><th>NA</th></tr></thead><tbody>
+<tr><td>1</td><td>Bandage 5 cm × 3 m</td><td>6</td><td><input name="First Aid 1 Available Quantity" type="text"></td><td><input name="First Aid 1 Expiry Date" type="date"></td><td style="text-align:center"><input name="First Aid 1 NA" type="checkbox" value="NA" aria-label="Mark Bandage 5 cm × 3 m as not applicable"></td></tr>
+<tr><td>2</td><td>Band-Aid</td><td>16</td><td><input name="First Aid 2 Available Quantity" type="text"></td><td><input name="First Aid 2 Expiry Date" type="date"></td><td style="text-align:center"><input name="First Aid 2 NA" type="checkbox" value="NA" aria-label="Mark Band-Aid as not applicable"></td></tr>
+<tr><td>3</td><td>Cotton 30 g</td><td>2</td><td><input name="First Aid 3 Available Quantity" type="text"></td><td><input name="First Aid 3 Expiry Date" type="date"></td><td style="text-align:center"><input name="First Aid 3 NA" type="checkbox" value="NA" aria-label="Mark Cotton 30 g as not applicable"></td></tr>
+<tr><td>4</td><td>ORS 21 g</td><td>2</td><td><input name="First Aid 4 Available Quantity" type="text"></td><td><input name="First Aid 4 Expiry Date" type="date"></td><td style="text-align:center"><input name="First Aid 4 NA" type="checkbox" value="NA" aria-label="Mark ORS 21 g as not applicable"></td></tr>
+<tr><td>5</td><td>Cipladine Ointment 15 g</td><td>1</td><td><input name="First Aid 5 Available Quantity" type="text"></td><td><input name="First Aid 5 Expiry Date" type="date"></td><td style="text-align:center"><input name="First Aid 5 NA" type="checkbox" value="NA" aria-label="Mark Cipladine Ointment 15 g as not applicable"></td></tr>
+<tr><td>6</td><td>Omnigel Cream 30 g</td><td>1</td><td><input name="First Aid 6 Available Quantity" type="text"></td><td><input name="First Aid 6 Expiry Date" type="date"></td><td style="text-align:center"><input name="First Aid 6 NA" type="checkbox" value="NA" aria-label="Mark Omnigel Cream 30 g as not applicable"></td></tr>
+<tr><td>7</td><td>Scissors 110 mm</td><td>1</td><td><input name="First Aid 7 Available Quantity" type="text"></td><td><input name="First Aid 7 Expiry Date" type="date"></td><td style="text-align:center"><input name="First Aid 7 NA" type="checkbox" value="NA" aria-label="Mark Scissors 110 mm as not applicable"></td></tr>
+<tr><td>8</td><td>Forceps 4 inch</td><td>1</td><td><input name="First Aid 8 Available Quantity" type="text"></td><td><input name="First Aid 8 Expiry Date" type="date"></td><td style="text-align:center"><input name="First Aid 8 NA" type="checkbox" value="NA" aria-label="Mark Forceps 4 inch as not applicable"></td></tr>
+<tr><td>9</td><td>Safety Pins</td><td>10 pcs</td><td><input name="First Aid 9 Available Quantity" type="text"></td><td><input name="First Aid 9 Expiry Date" type="date"></td><td style="text-align:center"><input name="First Aid 9 NA" type="checkbox" value="NA" aria-label="Mark Safety Pins as not applicable"></td></tr>
+<tr><td>10</td><td>Splint</td><td>5 pcs</td><td><input name="First Aid 10 Available Quantity" type="text"></td><td><input name="First Aid 10 Expiry Date" type="date"></td><td style="text-align:center"><input name="First Aid 10 NA" type="checkbox" value="NA" aria-label="Mark Splint as not applicable"></td></tr>
+<tr><td>11</td><td>Tablet Crocin</td><td>30</td><td><input name="First Aid 11 Available Quantity" type="text"></td><td><input name="First Aid 11 Expiry Date" type="date"></td><td style="text-align:center"><input name="First Aid 11 NA" type="checkbox" value="NA" aria-label="Mark Tablet Crocin as not applicable"></td></tr>
+<tr><td>12</td><td>Tablet Digene</td><td>30</td><td><input name="First Aid 12 Available Quantity" type="text"></td><td><input name="First Aid 12 Expiry Date" type="date"></td><td style="text-align:center"><input name="First Aid 12 NA" type="checkbox" value="NA" aria-label="Mark Tablet Digene as not applicable"></td></tr>
+</tbody></table></details>
+<details class="audit-section">
+<summary><h2>SECTION D: TOOL DETAILS</h2></summary>
+<table><thead><tr><th>S.No.</th><th>Tool / Safety Equipment</th><th>Status (choose one)</th><th>Remarks</th></tr></thead><tbody>
+<tr><td>1</td><td>Safety Helmet</td><td><div class="options"><label><input type="radio" name="Tool 1 Status" value="OK"> OK</label><label><input type="radio" name="Tool 1 Status" value="NOT OK"> NOT OK</label><label><input type="radio" name="Tool 1 Status" value="NA"> NA</label></div></td><td><input name="Tool 1 Remarks" type="text"></td></tr>
+<tr><td>2</td><td>Visor</td><td><div class="options"><label><input type="radio" name="Tool 2 Status" value="OK"> OK</label><label><input type="radio" name="Tool 2 Status" value="NOT OK"> NOT OK</label><label><input type="radio" name="Tool 2 Status" value="NA"> NA</label></div></td><td><input name="Tool 2 Remarks" type="text"></td></tr>
+<tr><td>3</td><td>Safety Belt</td><td><div class="options"><label><input type="radio" name="Tool 3 Status" value="OK"> OK</label><label><input type="radio" name="Tool 3 Status" value="NOT OK"> NOT OK</label><label><input type="radio" name="Tool 3 Status" value="NA"> NA</label></div></td><td><input name="Tool 3 Remarks" type="text"></td></tr>
+<tr><td>4</td><td>Shoes</td><td><div class="options"><label><input type="radio" name="Tool 4 Status" value="OK"> OK</label><label><input type="radio" name="Tool 4 Status" value="NOT OK"> NOT OK</label><label><input type="radio" name="Tool 4 Status" value="NA"> NA</label></div></td><td><input name="Tool 4 Remarks" type="text"></td></tr>
+<tr><td>5</td><td>Gloves</td><td><div class="options"><label><input type="radio" name="Tool 5 Status" value="OK"> OK</label><label><input type="radio" name="Tool 5 Status" value="NOT OK"> NOT OK</label><label><input type="radio" name="Tool 5 Status" value="NA"> NA</label></div></td><td><input name="Tool 5 Remarks" type="text"></td></tr>
+<tr><td>6</td><td>Stool</td><td><div class="options"><label><input type="radio" name="Tool 6 Status" value="OK"> OK</label><label><input type="radio" name="Tool 6 Status" value="NOT OK"> NOT OK</label><label><input type="radio" name="Tool 6 Status" value="NA"> NA</label></div></td><td><input name="Tool 6 Remarks" type="text"></td></tr>
+<tr><td>7</td><td>Large Ladder</td><td><div class="options"><label><input type="radio" name="Tool 7 Status" value="OK"> OK</label><label><input type="radio" name="Tool 7 Status" value="NOT OK"> NOT OK</label><label><input type="radio" name="Tool 7 Status" value="NA"> NA</label></div></td><td><input name="Tool 7 Remarks" type="text"></td></tr>
+<tr><td>8</td><td>Four-Step Ladder</td><td><div class="options"><label><input type="radio" name="Tool 8 Status" value="OK"> OK</label><label><input type="radio" name="Tool 8 Status" value="NOT OK"> NOT OK</label><label><input type="radio" name="Tool 8 Status" value="NA"> NA</label></div></td><td><input name="Tool 8 Remarks" type="text"></td></tr>
+<tr><td>9</td><td>Fire Extinguisher</td><td><div class="options"><label><input type="radio" name="Tool 9 Status" value="OK"> OK</label><label><input type="radio" name="Tool 9 Status" value="NOT OK"> NOT OK</label><label><input type="radio" name="Tool 9 Status" value="NA"> NA</label></div></td><td><input name="Tool 9 Remarks" type="text"></td></tr>
+<tr><td>10</td><td>Double Test Lamp</td><td><div class="options"><label><input type="radio" name="Tool 10 Status" value="OK"> OK</label><label><input type="radio" name="Tool 10 Status" value="NOT OK"> NOT OK</label><label><input type="radio" name="Tool 10 Status" value="NA"> NA</label></div></td><td><input name="Tool 10 Remarks" type="text"></td></tr>
+<tr><td>11</td><td>Safety Mat</td><td><div class="options"><label><input type="radio" name="Tool 11 Status" value="OK"> OK</label><label><input type="radio" name="Tool 11 Status" value="NOT OK"> NOT OK</label><label><input type="radio" name="Tool 11 Status" value="NA"> NA</label></div></td><td><input name="Tool 11 Remarks" type="text"></td></tr>
+<tr><td>12</td><td>Rope</td><td><div class="options"><label><input type="radio" name="Tool 12 Status" value="OK"> OK</label><label><input type="radio" name="Tool 12 Status" value="NOT OK"> NOT OK</label><label><input type="radio" name="Tool 12 Status" value="NA"> NA</label></div></td><td><input name="Tool 12 Remarks" type="text"></td></tr>
+<tr><td>13</td><td>Toolbox Condition</td><td><div class="options"><label><input type="radio" name="Tool 13 Status" value="OK"> OK</label><label><input type="radio" name="Tool 13 Status" value="NOT OK"> NOT OK</label><label><input type="radio" name="Tool 13 Status" value="NA"> NA</label></div></td><td><input name="Tool 13 Remarks" type="text"></td></tr>
+<tr><td>14</td><td>Insulated Pliers</td><td><div class="options"><label><input type="radio" name="Tool 14 Status" value="OK"> OK</label><label><input type="radio" name="Tool 14 Status" value="NOT OK"> NOT OK</label><label><input type="radio" name="Tool 14 Status" value="NA"> NA</label></div></td><td><input name="Tool 14 Remarks" type="text"></td></tr>
+<tr><td>15</td><td>WD-45</td><td><div class="options"><label><input type="radio" name="Tool 15 Status" value="OK"> OK</label><label><input type="radio" name="Tool 15 Status" value="NOT OK"> NOT OK</label><label><input type="radio" name="Tool 15 Status" value="NA"> NA</label></div></td><td><input name="Tool 15 Remarks" type="text"></td></tr>
+<tr><td>16</td><td>Torch</td><td><div class="options"><label><input type="radio" name="Tool 16 Status" value="OK"> OK</label><label><input type="radio" name="Tool 16 Status" value="NOT OK"> NOT OK</label><label><input type="radio" name="Tool 16 Status" value="NA"> NA</label></div></td><td><input name="Tool 16 Remarks" type="text"></td></tr>
+<tr><td>17</td><td>Extension Board</td><td><div class="options"><label><input type="radio" name="Tool 17 Status" value="OK"> OK</label><label><input type="radio" name="Tool 17 Status" value="NOT OK"> NOT OK</label><label><input type="radio" name="Tool 17 Status" value="NA"> NA</label></div></td><td><input name="Tool 17 Remarks" type="text"></td></tr>
+<tr><td>18</td><td>Hammer Machine</td><td><div class="options"><label><input type="radio" name="Tool 18 Status" value="OK"> OK</label><label><input type="radio" name="Tool 18 Status" value="NOT OK"> NOT OK</label><label><input type="radio" name="Tool 18 Status" value="NA"> NA</label></div></td><td><input name="Tool 18 Remarks" type="text"></td></tr>
+<tr><td>19</td><td>Smart Tool</td><td><div class="options"><label><input type="radio" name="Tool 19 Status" value="OK"> OK</label><label><input type="radio" name="Tool 19 Status" value="NOT OK"> NOT OK</label><label><input type="radio" name="Tool 19 Status" value="NA"> NA</label></div></td><td><input name="Tool 19 Remarks" type="text"></td></tr>
+</tbody></table></details>
+<h2>AUDIT SUMMARY</h2>
+<table><tbody>
+<tr><td><b>Audit Status</b></td><td><select name="Audit Status"><option value="">Select</option><option>Pass</option><option>Fail</option><option>Needs Improvement</option></select></td></tr>
+<tr><td><b>Deficiencies / Observations</b></td><td><textarea name="Deficiencies / Observations"></textarea></td></tr>
+<tr><td><b>Corrective Actions Required</b></td><td><textarea name="Corrective Actions Required"></textarea></td></tr>
+<tr><td><b>Auditor Name</b></td><td><input name="Auditor Name" type="text"></td></tr>
+<tr><td><b>Auditor Signature / Name</b></td><td><input name="Auditor Signature" type="text"></td></tr>
+<tr><td><b>Driver Signature / Name</b></td><td><input name="Driver Signature" type="text"></td></tr>
+<tr><td><b>Audit Date</b></td><td><input name="Audit Date" type="date"></td></tr>
+</tbody></table>
+</form>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script>
+function clearForm(){if(confirm('Clear all entered details?'))document.getElementById('auditForm').reset();}
+function cellText(cell){
+  const controls=[...cell.querySelectorAll('input,select,textarea')];
+  if(!controls.length)return cell.innerText.trim();
+  const radios=controls.filter(x=>x.type==='radio');
+  const checked=radios.find(x=>x.checked);
+  if(radios.length)return checked?checked.value:'—';
+  return controls.map(x=>x.type==='checkbox'?(x.checked?'NA':''):(x.value||'')).filter(Boolean).join(' / ')||'—';
+}
+async function submitAndDownload(){
+  const form=document.getElementById('auditForm');
+  if(!form.reportValidity())return;
+  const btn=document.getElementById('submitBtn');btn.disabled=true;btn.textContent='Generating PDF…';
+  try{
+    if(!window.jspdf||!window.jspdf.jsPDF)throw new Error('PDF library did not load. Check internet access or use Print / Save as PDF.');
+    const {jsPDF}=window.jspdf;const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+    const pageW=doc.internal.pageSize.getWidth(),margin=8;let y=13;
+    doc.setFont('helvetica','bold');doc.setFontSize(15);doc.text('VEHICLE AUDIT FORM',pageW/2,y,{align:'center'});y+=8;
+    const formTables=[...form.querySelectorAll('table')],heads=[...form.querySelectorAll('h2')];
+    for(let i=0;i<formTables.length;i++){
+      if(y>265){doc.addPage();y=12;}
+      doc.setFontSize(9);doc.setTextColor(255,255,255);doc.setFillColor(23,54,93);doc.rect(margin,y,pageW-margin*2,6,'F');
+      doc.text(heads[i].innerText,margin+2,y+4.2);y+=7;
+      const rows=[...formTables[i].querySelectorAll('tr')].map(tr=>[...tr.children].map(cellText));
+      if(doc.autoTable){
+        doc.autoTable({startY:y,head:rows.length?[rows[0]]:[],body:rows.slice(1),theme:'grid',margin:{left:margin,right:margin},
+          styles:{font:'helvetica',fontSize:6.5,cellPadding:1.4,overflow:'linebreak'},
+          headStyles:{fillColor:[220,234,247],textColor:[20,40,60],fontStyle:'bold'},
+          didDrawPage:function(){doc.setTextColor(0,0,0);}});
+        y=doc.lastAutoTable.finalY+4;
+      }else{
+        doc.setFontSize(6.5);doc.setTextColor(0,0,0);
+        for(const row of rows){const lines=doc.splitTextToSize(row.join(' | '),pageW-2*margin);if(y+lines.length*3.2>285){doc.addPage();y=12;}doc.text(lines,margin,y);y+=lines.length*3.2+1;}y+=3;
+      }
+    }
+    const vehicle=(form.elements['Vehicle Number'].value||'vehicle').replace(/[^a-z0-9_-]/gi,'_');
+    doc.save('Vehicle_Audit_'+vehicle+'.pdf');
+  }catch(e){alert(e.message||'Unable to create PDF. Please use Print / Save as PDF.');}
+  finally{btn.disabled=false;btn.textContent='Submit Details & Download PDF';}
+}
+</script>
+</body></html>
